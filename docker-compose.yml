@@ -1,0 +1,27 @@
+version: "3.3"
+
+services:
+  app:
+    build: "nps-app"
+    volumes:
+      - "./nps-app/:/app"
+
+  metabase:
+    image: metabase/metabase
+    environment:
+      MB_DB_FILE: "/metabase-data/metabase.db"
+    volumes:
+      - "./metabase/:/metabase-data/"
+    ports:
+      - 3000:3000
+
+  postgresdb:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=nps_portal
+
+volumes:
+  db1_data:
+  db1_config:
